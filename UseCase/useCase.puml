@@ -1,0 +1,26 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+actor Facilitator
+rectangle PresenceActivity {
+    Facilitator -- (Create Event)
+    Facilitator -- (Update Event)
+    Facilitator -- (Delete Event)
+    Facilitator -- (View Event)
+    Facilitator -- (View Member)
+    Facilitator -- (Create Member)
+    Facilitator -- (Update Member)
+    Facilitator -- (Delete Member)
+    Facilitator -- (Create Presence)
+    Facilitator -- (Delete Presence)
+    Facilitator -- (Create Category)
+    Facilitator -- (Update Category)
+    Facilitator -- (View Category)
+    Facilitator -- (Delete Category)
+    (Create Event) .> (View Category) : extend
+    (View Member) <. (Create Presence) : include
+    (View Event) <. (View Category) : include
+    (View Presence) <. (View Member) : include
+
+}
+@enduml

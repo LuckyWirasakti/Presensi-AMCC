@@ -1,0 +1,15 @@
+@startuml
+|Facilitator|
+start
+:Lihat Halaman Home;
+if(hasRow) then (true)
+    :Lihat Data Presensi;
+    stop
+else (false)
+    |System|
+    :Buat Event Baru;
+    :Menampilkan Halaman Event;
+    stop
+endif
+|#AntiqueWhite|System|
+@enduml

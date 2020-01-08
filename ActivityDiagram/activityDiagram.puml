@@ -1,0 +1,101 @@
+@startuml
+|Facilitator|
+start
+if(hasRow) then (true)
+    :Lihat Data Presensi;
+    stop
+else (false)
+    |System|
+    :Memilih Jenis Presensi;
+    if(inputCode) then (true)
+        |System|
+        :Menampilkan Halaman Input Code;
+        |Facilitator|
+        :Mengisi Nim Member;
+    else (false)
+        |System|
+        :Menampilkan QRCode Reader;
+'        anotasi
+        -[#blue]->
+        |Facilitator|
+        :Membidik QRCode KTA;
+    endif
+        |System|
+    if(Nim) then (true)
+        :Menampilkan Dialog Success;
+    else (false)
+        :Menampilkan Dialog Success;
+    endif
+    stop
+endif
+|#AntiqueWhite|System|
+@enduml
+
+@startuml
+partition Facilitator #CCCCCC{
+    (*)--> if "View Attendance" then
+    -->[true] "Lihat Data Presence"
+    --> (*)
+    else
+    -->[false] "Memilih Jenis Presensi"
+    endif
+
+}
+partition Sistem #CCCCEE{
+
+    if "Input Code" then
+        -->[true] "Membuka Halaman Input Code"
+    else
+        -->[false] "Menampilkan QRCode Reader"
+    endif
+}
+partition Facilitator #CCCCCC{
+    --> "Membuka Halaman Input Code"
+    --> "Mengisi Nim Member"
+}
+partition Sistem #CCCCEE{
+    if "Nim Presence" then
+    -->[true] "Menampilkan Dialog Success"
+    else
+    -->[false] "Menampilkan Dialog False"
+}
+partition Facilitator #CCCCCC{
+    --> "Menampilkan QRCode Reader"
+    --> "Membidik QRCode KTA"
+}
+partition Sistem #CCCCEE{
+    if "Nim Presence" then
+    -->[true] "Menampilkan Dialog Success"
+    else
+    -->[false] "Menampilkan Dialog False"
+}
+@enduml
+
+@startuml
+    |Facilitator|
+    start
+    :Lihat Data Presence;
+    |#AntiqueWhite|System|
+    if(hasRow) then (true)
+        :Menampilkan Semua Presence Berdasar Event;
+    else (false)
+        :Data Presensi Kosong;
+    endif
+    stop
+@enduml
+
+@startuml
+partition Facilitator #CCCCCC{
+    (*) --> "Lihat Data Presence"
+}
+partition Sistem #CCCCEE{
+
+    if "Table Has Row" then
+        -->[true] "Menampilkan Semua Presence Berdasar Event"
+        --> (*)
+    else
+        -->[false] "Data Presensi Kosong"
+        --> (*)
+    endif
+}
+@enduml

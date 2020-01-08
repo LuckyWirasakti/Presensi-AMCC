@@ -1,0 +1,32 @@
+@startuml
+|Facilitator|
+    :Memilih Jenis Presensi>
+    if(inputCode) then (true)
+        |System|
+        :Menampilkan Halaman Input Code;
+        |Facilitator|
+        :Mengisi Nim Member;
+    else (false)
+        |System|
+        :Menampilkan QRCode Reader;
+'        anotasi
+        -[#blue]->
+        |Facilitator|
+        :Membidik QRCode KTA;
+    endif
+        |System|
+    if(Nim) then (true)
+        :Mentimpan Data Presensi;
+        :Menampilkan Dialog Success;
+    else (false)
+        :Menampilkan Dialog Failure;
+    endif
+    |Facilitator|
+    :Call Memilih Jenis Presensi>
+    stop
+|Facilitator|
+partition Memilih_Jenis_Presensi {
+  :do 1st Memilih Jenis Presensi thing;
+  :do 2nd Memilih Jenis Presensi thing;
+}
+@enduml

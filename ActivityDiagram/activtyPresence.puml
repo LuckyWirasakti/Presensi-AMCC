@@ -1,0 +1,12 @@
+@startuml
+    |Facilitator|
+    start
+    :Lihat Data Presensi;
+    |#AntiqueWhite|System|
+    if(hasRow) then (true)
+        :Menampilkan Semua Presence Berdasar Event;
+    else (false)
+        :Data Presensi Kosong;
+    endif
+    stop
+@enduml

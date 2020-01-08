@@ -1,0 +1,158 @@
+@startuml
+skinparam wrapWidth 150
+class LaravelPackages {
+
+}
+class Request extends LaravelPackages {
+    # request
+
+    # {static} only()
+    # {static} accept()
+    # {static} except()
+}
+
+class Controller extends LaravelPackages {
+
+}
+
+PresenceController <|-- Router
+EventController <|-- Router
+MemberController <|-- Router
+CategoryController <|-- Router
+
+class Router extends LaravelPackages {
+    - Route('PresenceController')
+    - Route('EventController')
+    - Route('MemberController')
+    - Route('CategoryController')
+}
+
+class Model extends LaravelPackages {
+    # {static} guarded
+    # {static} fillable
+    # {static} primaryKey
+    # {static} hidden
+
+    # {abstract} void All()
+    # {abstract} void firstOrFail()
+    # {abstract} void find()
+    # {abstract} void belongTo()
+    # {abstract} void belongToMany()
+    # {abstract} void hasOne()
+    # {abstract} void hasMany()
+}
+
+Router <|-- View
+class View extends LaravelPackages {
+    - BladeComponent
+    - NPM Lib
+}
+
+class Category extends Model {
+    # guarded = ['created_at', 'updated_at', 'id']
+    # hidden = ['created_at', 'updated_at', 'id']
+    - Event() : hasOne(Event::class, 'category_id', 'id')
+}
+
+Request <|-- CategoryController
+Category <|-- CategoryController
+class CategoryController extends Controller {
+    - Request
+    - Category
+
+    + index()
+    + show()
+    + create()
+    + store(Request request)
+    + edit(id)
+    + update(Request request, Event event, id)
+}
+
+class Event extends Model {
+    # guarded = ['created_at', 'updated_at', 'id']
+    # hidden = ['created_at', 'updated_at', 'id']
+
+    # Category() : belongToMany(Category::class, Event::class, 'category_id', 'id')
+    # Member() : belongToMany(Category::class, Event::class, 'category_id', 'id')
+    - Count()
+}
+
+Request <|-- EventController
+Event <|-- EventController
+class EventController extends Controller {
+    - Request
+    - Event
+
+    + index()
+    + show()
+    + create()
+    + store(Request request)
+    + edit(id)
+    + update(Request request, Event event, id)
+}
+
+class Member extends Model {
+    # guarded = ['created_at', 'updated_at', 'id']
+    # hidden = ['created_at', 'updated_at', 'id']
+    # Category() : belongToMany(Category::class, Event::class, 'category_id', 'id')
+}
+
+Request <|-- MemberController
+Member <|-- MemberController
+class MemberController extends Controller {
+    - Request
+    - Member
+
+    + index()
+    + show()
+    + create()
+    + store(Request request)
+    + edit(id)
+    + update(Request request, Event event, id)
+}
+
+class Presence extends Model {
+    # guarded = ['created_at', 'updated_at', 'id']
+    # hidden = ['created_at', 'updated_at', 'id']
+    # Attendance() : belongToMany(Member::class, Event::class, 'member_id', 'event_id', 'created_at')->withPivot('created_at')
+}
+
+Request <|-- PresenceController
+Presence <|-- PresenceController
+class PresenceController extends Controller {
+    - Request
+    - Member
+
+    + index()
+    + show()
+    + create()
+    + store(Request request)
+    + edit(id)
+    + update(Request request, Event event, id)
+}
+
+class EventBlade extends View {
+    + showEvent()
+    + createEvent()
+    + updateEvent()
+}
+
+class CategoryBlade extends View {
+    + showCategory()
+    + createCategory()
+    + updateCategory()
+}
+
+class MemberBlade extends View {
+    + showMember()
+    + createMember()
+    + updateMember()
+}
+
+class PresenceBlade extends View {
+    + showPresence()
+    + inputCode()
+    + QRCode()
+}
+
+@enduml

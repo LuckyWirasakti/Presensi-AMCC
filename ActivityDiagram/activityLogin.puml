@@ -1,0 +1,23 @@
+@startuml
+|Facilitator|
+start
+:Membuka Aplikasi AMCC;
+|#AntiqueWhite|System|
+:Membuka Aplikasi AMCC;
+:Menampilkan Halaman Login;
+|Facilitator|
+:Call Mengisi Data Login>
+if(attempt) then (false)
+    : Call Mengisi Data Login>
+else (true)
+    |System|
+    :Menampilkan Halaman Home;
+endif
+stop
+
+|Facilitator|
+partition Mengisi_Data_Login {
+  :do 1st Mengisi Data Login thing;
+  :do 2nd Mengisi Data Login thing;
+}
+@enduml

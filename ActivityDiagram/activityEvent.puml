@@ -1,0 +1,18 @@
+@startuml
+|System|
+start
+Label label;
+:Menampilkan Halaman Event;
+|Facilitator|
+:Mengisi Data Event;
+|#AntiqueWhite|System|
+:Menyimpan Data Event;
+if(affected) then (true)
+    :Menampilkan Dialog Success;
+    :Menyimpan event_id ke local_storage;
+    :Membuka Menu Presensi;
+else (false)
+    :Menampilkan Dialog Failure;
+endif
+stop
+@enduml
